@@ -1,4 +1,4 @@
-function [] = ProcessAudio(audioName)
+function [data_R, sampleRate] = ProcessAudio(audioName)
     [data, sampleRate] = audioread(audioName);
     %Sample rate
     fprintf("Sample rate " + audioName + ": " + sampleRate + "\n");
@@ -16,6 +16,8 @@ function [] = ProcessAudio(audioName)
 
     %sound(data_C, sampleRate);
     
+    audiowrite('newSoundFile.wav', data_C, sampleRate);
+
     %Plot Audio
     plotAudio(data_C, sampleRate, audioName);
 
