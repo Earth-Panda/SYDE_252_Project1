@@ -20,8 +20,7 @@ function [] = ProcessAudio(audioName)
     plotAudio(data_C, sampleRate, audioName);
 
     %Sample update
-    %data_R = resample(data_C, 16000, sampleRate); 
-
-    %plotAudio(data_R, 16000, audioName)
+    [P, Q] = rat(16000/sampleRate);
+    data_R = resample(data_C, P, Q); 
 end
 
