@@ -1,0 +1,26 @@
+function [] = ProcessAudio(audioName)
+    [data, sampleRate] = audioread(audioName);
+    %Sample rate
+    fprintf("Sample rate " + audioName + ": " + sampleRate + "\n");
+    
+    %Number of audio channels
+    [row_OG, col_OG] = size(data);
+    fprintf("Channels (" + audioName + "): " + col_OG + "\n");
+    
+    %Combine audio channels
+    data = concatChannels(data);
+    
+    %Number of audio channels
+    [row_C, col_C] = size(data);
+    fprintf("Updated Channels (" + audioName + "): " + col_C + "\n");
+
+    %sound(data_C, sampleRate);
+    
+    %Plot Audio
+    plotAudio(data, sampleRate, audioName);
+
+    %Sample update
+    factor = sampleRate*16000
+    data = resample(sampleRate/fa) 
+end
+
