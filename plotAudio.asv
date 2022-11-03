@@ -1,4 +1,4 @@
-function [] = plotAudio(Fs, audioName, n, m, i)
+function [] = plotAudio(Fs, Sr, audioName, n, m, i)
     subplot(n,m,i);    
     n = 1:length(Fs);
     plot(n,Fs);

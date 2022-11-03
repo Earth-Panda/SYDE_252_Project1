@@ -19,7 +19,7 @@ function [data_R, sampleRate] = ProcessAudio(audioName)
     audiowrite('newSoundFile.wav', data_C, sampleRate);
 
     %Plot Audio
-    plotAudio(data_C, sampleRate, audioName);
+    %plotAudio(data_C, sampleRate, audioName);
 
     %Sample update
     [P, Q] = rat(16000/sampleRate);

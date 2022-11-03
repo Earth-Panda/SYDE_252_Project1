@@ -10,13 +10,6 @@ function [new_data] = audioSetup(file, processedFileName)
 
     audiowrite(processedFileName, data, sample_rate);
     
-    n = 1:length(data);
-    subplot(2,1,1)
-    plot(n, data);
-    grid
-    title("Setup Data")
-    hold on
-
     [P, Q] = rat(16e3/sample_rate);
     new_data = resample(data, P, Q);
 
