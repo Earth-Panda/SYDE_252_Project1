@@ -8,12 +8,14 @@ end
 
 processedFileName = strcat('new',audio);
 
-data = audioSetup(audio, processedFileName); % Returns setup audio sample
+[data, sample_rate] = audioSetup(audio, processedFileName); % Returns setup audio sample
+
+% y_n = 0;
+% for n = 1:window % Matlab indices start at 1
+%     y_n = (b_k(n)*data(n)) + y_n; % Computing weighted average filter
+% end
 
 resampled_data = filter(b_k, 1, data);
-
-sound(resampled_data, 16e3);
-
 n = 1:length(data);
 
 subplot(2,1,2)
