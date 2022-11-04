@@ -1,9 +1,9 @@
 %General clear
-clear all;
+
 clc;
 
 %Read audio files
-[Birds_Data, Birds_Sample] = ProcessAudio("Birds.wav");
+[Birds_Data, Birds_Sample] = audioSetup("Birds.wav");
 %ProcessAudio("Drum.wav");
 %ProcessAudio("Speech.wav");
 
