@@ -7,4 +7,3 @@ function [] = plotAudio(Fs, Sr, audioName)
     xlabel('Time');
     ylabel('signal');
 end
-

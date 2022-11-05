@@ -3,9 +3,10 @@
 clc;
 
 %Read audio files
-[Birds_Data, Birds_Sample] = audioSetup("Birds.wav");
-%ProcessAudio("Drum.wav");
-%ProcessAudio("Speech.wav");
+%Mean_Filter("Birds.wav", 3);
+%weightedAvg("Birds.wav", 3);
+%MedianFilter("Birds.wav", 3);
 
-plotAudio(Birds_Data, Birds_Sample,"Birds.wav");
-Mean_Filter(Birds_Data, 3, "Birds.wav");
+
+plotAudioDiff("Mean","Birds.wav", 2, 2, [3,4], 1:1:30);
+plotAudioDiff("WAvg","Birds.wav", 2, 2, [3,4], 1:1:30);
