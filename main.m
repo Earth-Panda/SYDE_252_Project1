@@ -10,3 +10,4 @@ clc;
 
 plotAudioDiff("Mean","Birds.wav", 2, 2, [3,4], 1:1:30);
 plotAudioDiff("WAvg","Birds.wav", 2, 2, [3,4], 1:1:30);
+plotAudioDiff("Median","Birds.wav", 2, 2, [3,4], 1:1:30);

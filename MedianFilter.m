@@ -1,8 +1,10 @@
-function [filteredSignal] = MedianFilter(inputSignal, window)
+function [resampled_data, outputSignal] = MedianFilter(inputSignal, window)
+
+    %apply median filter
     processedFileName = strcat('new', inputSignal);
     resampled_data = audioSetup(inputSignal, processedFileName);
     [dataSize, dim] = size(resampled_data);
-    filteredSignal = zeros(dataSize, 1);
+    outputSignal = zeros(dataSize, 1);
     for n = 1 : dataSize
         if n-window+1 < 1
             startRange = 1;
@@ -11,12 +13,14 @@ function [filteredSignal] = MedianFilter(inputSignal, window)
         end
         samples = resampled_data(startRange : n);
         medianVal = median(samples);
-        filteredSignal(n) = medianVal;
+        outputSignal(n) = medianVal;
     end
-    sound(filteredSignal, 16e3);
-    length = 1:size(filteredSignal);
+    %sound(outputSignal, 16e3);
+
+    %plot
+    length = 1:size(outputSignal);
     subplot(2,1,2);
-    plot(length, filteredSignal);
+    plot(length, outputSignal);
     grid;
     title("Filtered Median Data");
     hold off;
