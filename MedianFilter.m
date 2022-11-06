@@ -15,15 +15,16 @@ function [resampled_data, outputSignal] = MedianFilter(inputSignal, window)
         medianVal = median(samples);
         outputSignal(n) = medianVal;
     end
-    %sound(outputSignal, 16e3);
+    
+    sound(outputSignal, 16e3);
 
-    %{
-    plot
+    
+    %plot
     length = 1:size(outputSignal);
     subplot(2,1,2);
     plot(length, outputSignal);
     grid;
     title("Filtered Median Data");
     hold off;
-    %}
+    
 end
