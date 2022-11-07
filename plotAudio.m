@@ -1,9 +1,9 @@
-function [] = plotAudio(Fs, Sr, audioName)
+function [] = plotAudio(Fs, Title)
     figure;
     n = 1:length(Fs);
     plot(n,Fs);
     grid;
-    title(audioName);
+    title(Title);
     xlabel('Time');
     ylabel('signal');
 end

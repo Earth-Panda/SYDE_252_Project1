@@ -11,9 +11,10 @@ function [data, filtered_data] = weightedAvg(audio, window, shouldPlot)
     
     filtered_data = filter(b_k, 1, data);
     
-    sound(filtered_data, 16e3);
+    
     
     if shouldPlot
+        sound(filtered_data, 16e3);
         n = 1:length(data);
         plot(n, filtered_data);
         grid

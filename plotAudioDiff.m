@@ -1,7 +1,7 @@
 function [] = plotAudioDiff(filterType, audioName, n, m, i, winRange)
     if filterType == "Mean"
         for k = 1 : length(winRange)
-          [og_data, output_data] = Mean_Filter(audioName, k);
+          [og_data, output_data] = Mean_Filter(audioName, k, false);
           diff(k) = sum(abs(output_data - og_data));
         end
     end
@@ -13,7 +13,7 @@ function [] = plotAudioDiff(filterType, audioName, n, m, i, winRange)
     end
     if filterType == "Median"
         for k = 1 : length(winRange)
-            [og_data, output_data] = MedianFilter(audioName, k);
+            [og_data, output_data] = MedianFilter(audioName, k, false);
             diff(k) = sum(abs(output_data - og_data));
         end
     end
