@@ -11,17 +11,29 @@ function [beatRegion, sampleFound] = BeatRegion(audio, tol)
                     break
                 end
             end
-
+            
+            disp("Beat region" + beatRegion);
             %check for a spike at the beat differential within the
             %tolerance range (check to see if there is another beat
             %equadistant)
-           for k = (j+beatRegion):(j+beatRegion+tol)
-               if(audio() ~= 0)
-                   %beat sample found
-                   sampleFound = true;
-                   return
-               end
-           end
+
+            for beatNum = 1:(beatsInClip)
+                beatIndex = j+beatRegion*beatNum;
+                %tolerance check
+                for k = (beatIndex):(beatIndex+tol)
+                    if(k < length(audio))
+                       if(audio(k) ~= 0)
+                           %beat sample found
+                           sampleFound = true;
+                       end
+                    else
+                        %disp("error");
+                    end
+                end
+                if(sampleFound == false)
+                    return
+                end
+            end
         end
     end
     sampleFound = false;
