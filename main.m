@@ -28,6 +28,9 @@ if section == "BPM"
     plotAudio(audio, "Drum.wav");
     %use a threshhold for what is considered a "beat"
     pluseThreshold = 0.3;
+
+    buffer = 0;
+    tol = 1500;
     %filter all signals below that "pulse"
     for i = 1:length(audio)
         if (abs(audio(i)) < pluseThreshold)
