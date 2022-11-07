@@ -27,20 +27,23 @@ if section == "BPM"
 
     plotAudio(audio, "Drum.wav");
     %use a threshhold for what is considered a "beat"
-    pluseThreshold = 0.3;
+    pluseThreshold = 0.1;
 
     buffer = 0;
     tol = 1500;
     %filter all signals below that "pulse"
     for i = 1:length(audio)
-        if (abs(audio(i)) < pluseThreshold)
+        if (abs(audio(i)) < pluseThreshold || buffer > 0)
             audio(i) = 0;
+            buffer = buffer - 1;
+        else
+            buffer = tol;
         end
     end
     plotAudio(audio, "Pulses");
     
     %determine the region of 3 equidistant beats
-    [beatRegion, sampleFound] = BeatRegion(audio, 500);
+    %[beatRegion, sampleFound] = BeatRegion(audio, 500);
     
     %Calculate BPM
     if(sampleFound)

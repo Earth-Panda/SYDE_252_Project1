@@ -16,7 +16,7 @@ function [beatRegion, sampleFound] = BeatRegion(audio, tol)
             %tolerance range (check to see if there is another beat
             %equadistant)
            for k = (j+beatRegion):(j+beatRegion+tol)
-               if(audio(k) ~= 0)
+               if(audio() ~= 0)
                    %beat sample found
                    sampleFound = true;
                    return
