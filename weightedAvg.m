@@ -5,15 +5,13 @@ function [data, filtered_data] = weightedAvg(audio, window, shouldPlot)
         b_k(i) = a_k(i) / sum(a_k); % Normalizing Gaussian coefficients
     end
     
-    processedFileName = strcat('new',audio);
+    processedFileName = strcat('new',audio); % Setting name of new file name, used in audioSetup.m audiowrite call
     
     data = audioSetup(audio, processedFileName, false); % Returns setup audio sample
     
-    filtered_data = filter(b_k, 1, data);
+    filtered_data = filter(b_k, 1, data); % Returns filtered audio sample
     
-    
-    
-    if shouldPlot
+    if shouldPlot % Condition to plot, called in other files
         sound(filtered_data, 16e3);
         n = 1:length(data);
         plot(n, filtered_data);

@@ -16,7 +16,7 @@ function [new_data, sample_rate] = audioSetup(file, processedFileName, shouldPlo
     end
 
     [P, Q] = rat(16e3/sample_rate); % Returns a rational approximation of the target frequency and current frequency
-    new_data = resample(data, P, Q); % Using the resample function to upsample or downsample to 16kHz
+    new_data = resample(data, P, Q); % Using the resample function to obtain 
 end
 
 

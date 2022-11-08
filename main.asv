@@ -1,12 +1,13 @@
 %General clear
 
 clc;
+clear;
 close all;
 
-section = "BPM"
+section = "Syllables"
 %% Read audio files
 %Mean_Filter("Birds.wav", 3);
-% [data filtered_data] = weightedAvg("Speech.wav", 13, true);
+%[data filtered_data] = weightedAvg("Speech.wav", 13, true);
 %MedianFilter("Birds.wav", 3);
 
 % plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
@@ -19,77 +20,63 @@ if section == "BPM"
     %plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
     %plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
     
-    %BPM is aproximatly 82 BPM
+    %BPM is aproximately 82 BPM
     [audio, sampleRate] = audioSetup("Drum.wav", "newDrum.wav", false);
     time = audioinfo("Drum.wav").Duration;
     %seconds per index
     s_index = time/length(audio);
 
     plotAudio(audio, "Drum.wav");
-    %use a threshhold for what is considered a "beat"
+    %use a threshold for what is considered a "beat"
     pluseThreshold = 0.3;
+
+    buffer = 0;
+    tol = 1500;
     %filter all signals below that "pulse"
     for i = 1:length(audio)
-        if (abs(audio(i)) < pluseThreshold)
+        if (abs(audio(i)) < pluseThreshold || buffer > 0)
             audio(i) = 0;
+            buffer = buffer - 1;
+        else
+            buffer = tol;
         end
     end
     plotAudio(audio, "Pulses");
     
-    tol = 500;
-    beatDist = 0; %distance between two beats
-    sampleFound = false; %if the sample total has been found
-    % Determine beats
-    for j = 1:length(audio)
-        %if there was a spike there
-        if (aduio(i) ~= 0)
-            %check for the next spike
-            for k = (j+tol):length(audio)
-                %get the distance between the first and next beat
-                if(audio(k) ~= 0)
-                    beatDist = k-j;
-                    break
-                end
-            end
-
-            %check for a spike at the beat differential within the
-            %tolerance range (check to see if there is another beat
-            %equadistant)
-           for l = (j+beatDist):(j+beatDist+tol)
-               if(audio(l) ~= 0)
-                   %beat sample found
-                   sampleFound = true;
-                   break
-               end
-           end
-
-           %if we have finished iterating though the samples for bpm exit
-           if(sampleFound)
-               break
-           end
-        end
-    end
+    %determine the region of 3 equidistant beats
+    [beatRegion, sampleFound] = BeatRegion(audio, 500);
     
     %Calculate BPM
-    beats = 3; 
-    seconds = beatDist *2 * s_index;
+    if(sampleFound)
+        beats = 3; 
+        seconds = beatRegion * 2 * s_index;
+        min = seconds/60;
+        
+        BPM = beats/min;
+    
+        disp(BPM);
+    end
+    
 end
 %% Number of Syllables in Speech clip
 if section == "Syllables"
-    plotAudioDiff("Mean","Speech.wav", 3, 2, [1,2], 1:1:30);
-    plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
-    plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
+%     plotAudioDiff("Mean","Speech.wav", 3, 2, [1,2], 1:1:30);
+%     plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
+%     plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
+
+    [data filtered_data] = weightedAvg("Speech.wav", 13, true);
+
     % A huge ta-pes-try hung in her hallway 10 syllables
-    noise_threshold = 5.6865e-6
-    syllable_threshold = sum(abs(filtered_data(34124:35464)))
-    active_region = [];
-    syllable_counter = 0;
-    pause = true;
+    noise_threshold = 5.6865e-6 % Noise threshold
+    syllable_threshold = sum(abs(filtered_data(34124:35464))) % value of chosen syllable threshold from speech sample
+    active_region = []; % Declaring empty active region array
+    syllable_counter = 0; % Initializing syllable counter
+    pause = true; % Initalizing pause boolean
     
-    for i = 1:length(filtered_data)
-        if (abs(filtered_data(i)) > noise_threshold)
-            active_region(i) = filtered_data(i);
-            pause = false;
+    for i = 1:length(filtered_data) % Iterating over fltered_data
+        if (abs(filtered_data(i)) > noise_threshold) % Comparing the absolute magnitude of the filtered data to the noise threshold
+            active_region(i) = filtered_data(i); % Storing potential syllable data in active region array
+            pause = false; %
         else
             pause = true;
         end
@@ -104,5 +91,12 @@ if section == "Syllables"
     end
     syllable_counter
 end
-%% 
+%% Silence
+if section == "Silence"
+%    plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
+%    plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
+%    plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+
+   SilenceDetector("Birds.wav");
+end
 
