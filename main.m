@@ -6,13 +6,11 @@ close all;
 
 section = "Syllables"
 %% Read audio files
-%Mean_Filter("Birds.wav", 3);
-%[data filtered_data] = weightedAvg("Speech.wav", 13, true);
-%MedianFilter("Birds.wav", 3);
-
-% plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
-% plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
-% plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+if section == "None"    
+    plotAudioDiff("Median","Birds.wav", 3, 2, [1,2], 1:1:30);
+    plotAudioDiff("Median","Drum.wav", 3, 2, [3,4], 1:1:30);
+    plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
+end
 
 %% BPM of the Drums
 if section == "BPM"
@@ -67,7 +65,7 @@ if section == "Syllables"
     [data filtered_data] = weightedAvg("Speech.wav", 13, true);
 
     % A huge ta-pes-try hung in her hallway 10 syllables
-    noise_threshold = 5.6865e-6 % Noise threshold
+    noise_threshold = 5.6865e-4 % Noise threshold
     syllable_threshold = sum(abs(filtered_data(34124:35464))) % value of chosen syllable threshold from speech sample
     active_region = []; % Declaring empty active region array
     syllable_counter = 0; % Initializing syllable counter
@@ -91,6 +89,7 @@ if section == "Syllables"
     end
     syllable_counter % Missing semicolon to output value of syllalble counter
 end
+staticNosie(filtered_data, noise_threshold);
 %% Silence
 if section == "Silence"
 %    plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);

@@ -10,9 +10,9 @@ section = "Syllables"
 %[data filtered_data] = weightedAvg("Speech.wav", 13, true);
 %MedianFilter("Birds.wav", 3);
 
-% plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
+% plotAudioDiff("WAvg","Birds.wav", 3, 2, [1,2], 1:1:30);
 % plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
-% plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+% plotAudioDiff("WAvg","Birds.wav", 3, 2, [5,6], 1:1:30);
 
 %% BPM of the Drums
 if section == "BPM"
@@ -76,20 +76,20 @@ if section == "Syllables"
     for i = 1:length(filtered_data) % Iterating over fltered_data
         if (abs(filtered_data(i)) > noise_threshold) % Comparing the absolute magnitude of the filtered data to the noise threshold
             active_region(i) = filtered_data(i); % Storing potential syllable data in active region array
-            pause = false; %
+            pause = false; % Setting pause to false
         else
-            pause = true;
+            pause = true; % Setting pause to true
         end
         
-        if (abs(filtered_data(i)) < noise_threshold && pause == true)
-            if sum(abs(active_region)) > syllable_threshold
-                syllable_counter = syllable_counter + 1;
-                active_region = [];
-                pause = false;
+        if (abs(filtered_data(i)) < noise_threshold && pause == true) % If break in active region
+            if sum(abs(active_region)) > syllable_threshold % Check if active region data overcomes syllable threshold
+                syllable_counter = syllable_counter + 1; % Increment syllable counter
+                active_region = []; % Reset active_region array to 0
+                pause = false; % Setting pause to false
             end
         end
     end
-    syllable_counter
+    syllable_counter % Missing semicolon to output value of syllalble counter
 end
 %% Silence
 if section == "Silence"
