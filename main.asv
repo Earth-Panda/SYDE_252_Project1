@@ -1,10 +1,108 @@
 %General clear
-clear all;
+
 clc;
+close all;
 
-%Read audio files
-[Birds_Data, Birds_Sample] = ProcessAudio("Birds.wav");
-%ProcessAudio("Drum.wav");
-%ProcessAudio("Speech.wav");
+section = "BPM"
+%% Read audio files
+%Mean_Filter("Birds.wav", 3);
+% [data filtered_data] = weightedAvg("Speech.wav", 13, true);
+%MedianFilter("Birds.wav", 3);
 
-Mean_Filter()
+% plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
+% plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
+% plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+
+%% BPM of the Drums
+if section == "BPM"
+    %plotAudioDiff("Mean","Drum.wav", 3, 2, [1,2], 1:1:30);
+    %plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
+    %plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
+    
+    %BPM is aproximatly 82 BPM
+    [audio, sampleRate] = audioSetup("Drum.wav", "newDrum.wav", false);
+    time = audioinfo("Drum.wav").Duration;
+    %seconds per index
+    s_index = time/length(audio);
+
+    plotAudio(audio, "Drum.wav");
+    %use a threshhold for what is considered a "beat"
+    pluseThreshold = 0.3;
+    %filter all signals below that "pulse"
+    for i = 1:length(audio)
+        if (abs(audio(i)) < pluseThreshold)
+            audio(i) = 0;
+        end
+    end
+    plotAudio(audio, "Pulses");
+    
+    tol = 500;
+    beatDist = 0; %distance between two beats
+    sampleFound = false; %if the sample total has been found
+    % Determine beats
+    for j = 1:length(audio)
+        %if there was a spike there
+        if (aduio(i) ~= 0)
+            %check for the next spike
+            for k = (j+tol):length(audio)
+                %get the distance between the first and next beat
+                if(audio(k) ~= 0)
+                    beatDist = k-j;
+                    break
+                end
+            end
+
+            %check for a spike at the beat differential within the
+            %tolerance range (check to see if there is another beat
+            %equadistant)
+           for l = (j+beatDist):(j+beatDist+tol)
+               if(audio(l) ~= 0)
+                   %beat sample found
+                   sampleFound = true;
+                   break
+               end
+           end
+
+           %if we have finished iterating though the samples for bpm exit
+           if(sampleFound)
+               break
+           end
+        end
+    end
+    
+    %Calculate BPM
+    beats = 3; 
+    seconds = beatDist *2 * s_index;
+end
+%% Number of Syllables in Speech clip
+if section == "Syllables"
+    plotAudioDiff("Mean","Speech.wav", 3, 2, [1,2], 1:1:30);
+    plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
+    plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
+    % A huge ta-pes-try hung in her hallway 10 syllables
+    noise_threshold = 5.6865e-6
+    syllable_threshold = sum(abs(filtered_data(34124:35464)))
+    active_region = [];
+    syllable_counter = 0;
+    pause = true;
+    
+    for i = 1:length(filtered_data)
+        if (abs(filtered_data(i)) > noise_threshold)
+            active_region(i) = filtered_data(i);
+            pause = false;
+        else
+            pause = true;
+        end
+        
+        if (abs(filtered_data(i)) < noise_threshold && pause == true)
+            if sum(abs(active_region)) > syllable_threshold
+                syllable_counter = syllable_counter + 1;
+                active_region = [];
+                pause = false;
+            end
+        end
+    end
+    syllable_counter
+end
+%% 
+

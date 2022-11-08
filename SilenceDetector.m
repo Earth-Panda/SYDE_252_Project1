@@ -3,7 +3,8 @@
 function [silenceSignal] = SilenceDetector(inputSignal)
     %filter some noise out of raw data to smooth out input signal - this is
     %the first of 2 filters applied
-    filteredData = Mean_Filter(inputSignal, 12);
+    filteredData = Mean_Filter(inputSignal, 12, 0);
+    
     [dataSize, dim] = size(filteredData);
 
     %find threshold and further filter data 

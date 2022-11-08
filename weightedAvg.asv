@@ -1,27 +1,25 @@
-function [data, resampled_data] = weightedAvg(audio, window)
-clc;
-a_k = gausswin(window);
-b_k = zeros(1, window); % Preallocating size of array to increase speed
-for i = 1:length(a_k)
-    b_k(i) = a_k(i) / sum(a_k); % Normalizing Gaussian coefficients
-end
-
-processedFileName = strcat('new',audio);
-
-[data, sample_rate] = audioSetup(audio, processedFileName); % Returns setup audio sample
-
-% y_n = 0;
-% for n = 1:window % Matlab indices start at 1
-%     y_n = (b_k(n)*data(n)) + y_n; % Computing weighted average filter
-% end
-
-resampled_data = filter(b_k, 1, data);
-n = 1:length(data);
-
-subplot(2,1,2)
-plot(n, resampled_data);
-grid
-title("Resampled Data")
-hold off
+function [data, filtered_data] = weightedAvg(audio, window, cool)    
+    a_k = gausswin(window);
+    b_k = zeros(1, window); % Preallocating size of array to increase speed
+    for i = 1:length(a_k)
+        b_k(i) = a_k(i) / sum(a_k); % Normalizing Gaussian coefficients
+    end
+    
+    processedFileName = strcat('new',audio);
+    
+    data = audioSetup(audio, processedFileName); % Returns setup audio sample
+    
+    filtered_data = filter(b_k, 1, data);
+    
+    %sound(filtered_data, 16e3);
+    
+    if shouldPlot
+        n = 1:length(data);
+        subplot(2,1,2)
+        plot(n, filtered_data);
+        grid
+        title("Weighted filter: " + audio)
+        hold off
+    end
 end
 
