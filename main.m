@@ -4,10 +4,10 @@ clc;
 clear;
 close all;
 
-section = "BPM"
+section = "Silence"
 %% Read audio files
 %Mean_Filter("Birds.wav", 3);
-% [data filtered_data] = weightedAvg("Speech.wav", 13, true);
+%[data filtered_data] = weightedAvg("Speech.wav", 13, true);
 %MedianFilter("Birds.wav", 3);
 
 % plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
@@ -20,14 +20,14 @@ if section == "BPM"
     %plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
     %plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
     
-    %BPM is aproximatly 82 BPM
+    %BPM is aproximately 82 BPM
     [audio, sampleRate] = audioSetup("Drum.wav", "newDrum.wav", false);
     time = audioinfo("Drum.wav").Duration;
     %seconds per index
     s_index = time/length(audio);
 
     plotAudio(audio, "Drum.wav");
-    %use a threshhold for what is considered a "beat"
+    %use a threshold for what is considered a "beat"
     pluseThreshold = 0.3;
 
     buffer = 0;
@@ -88,5 +88,12 @@ if section == "Syllables"
     end
     syllable_counter
 end
-%% 
+%% Silence
+if section == "Silence"
+%    plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
+%    plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
+%    plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+
+   SilenceDetector("Birds.wav");
+end
 

@@ -7,7 +7,7 @@
 %the bird file to show it working
 function [silenceSignal] = SilenceDetector(inputSignal)
     %filter data to smooth out input signal
-    filteredData = Mean_Filter(inputSignal, 12);
+    filteredData = Mean_Filter(inputSignal, 12, 0);
     [dataSize, dim] = size(filteredData);
     %find threshold
     interval = 100;
