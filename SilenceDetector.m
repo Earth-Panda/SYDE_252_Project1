@@ -3,6 +3,8 @@
 function [silenceSignal] = SilenceDetector(inputSignal)
     %filter some noise out of raw data to smooth out input signal - this is
     %the first of 2 filters applied
+    processedFileName = strcat('new', inputSignal);
+    processedFile = audioSetup(inputSignal, processedFileName, 0);
     filteredData = Mean_Filter(inputSignal, 12, 0);
     
     [dataSize, dim] = size(filteredData);
@@ -60,7 +62,7 @@ function [silenceSignal] = SilenceDetector(inputSignal)
     %is silenced
     length = 1:size(silenceSignal);
     subplot(2, 1, 1);
-    plot(length, filteredData);
+    plot(length, processedFile);
     grid;
     title("Mean Filtered Bird Audio");
     subplot(2,1,2);
@@ -68,5 +70,6 @@ function [silenceSignal] = SilenceDetector(inputSignal)
     grid;
     title("Silence Signal (0 indicates silence)");
     hold off;
+    %
   
 end
