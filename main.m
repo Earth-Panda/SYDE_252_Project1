@@ -11,50 +11,27 @@ if section == "None"
     plotAudioDiff("Median","Drum.wav", 3, 2, [3,4], 1:1:30);
     plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
 end
+%% Audio difference 
 
+% Birds
+%plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:50);
+% plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
+% plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+% Drum
+%diff = plotAudioDiff("Mean","Drum.wav", 3, 2, [3,4], 1:1:250);
+% plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
+% plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
+
+% Speech
+%plotAudioDiff("Mean","Speech.wav", 3, 2, [5,6], 1:1:150);
+% plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
+% plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
+
+%d_diff = gradient(diff);
+%plotAudio(d_diff, "Gradient");
 %% BPM of the Drums
 if section == "BPM"
-    %plotAudioDiff("Mean","Drum.wav", 3, 2, [1,2], 1:1:30);
-    %plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
-    %plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
-    
-    %BPM is aproximately 82 BPM
-    [audio, sampleRate] = audioSetup("Drum.wav", "newDrum.wav", false);
-    time = audioinfo("Drum.wav").Duration;
-    %seconds per index
-    s_index = time/length(audio);
-
-    plotAudio(audio, "Drum.wav");
-    %use a threshold for what is considered a "beat"
-    pluseThreshold = 0.3;
-
-    buffer = 0;
-    tol = 1500;
-    %filter all signals below that "pulse"
-    for i = 1:length(audio)
-        if (abs(audio(i)) < pluseThreshold || buffer > 0)
-            audio(i) = 0;
-            buffer = buffer - 1;
-        else
-            buffer = tol;
-        end
-    end
-    plotAudio(audio, "Pulses");
-    
-    %determine the region of 3 equidistant beats
-    [beatRegion, sampleFound] = BeatRegion(audio, 500);
-    
-    %Calculate BPM
-    if(sampleFound)
-        beats = 3; 
-        seconds = beatRegion * 2 * s_index;
-        min = seconds/60;
-        
-        BPM = beats/min;
-    
-        disp(BPM);
-    end
-    
+    BPM();
 end
 %% Number of Syllables in Speech clip
 if section == "Syllables"
