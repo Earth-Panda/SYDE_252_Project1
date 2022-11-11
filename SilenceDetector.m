@@ -21,7 +21,7 @@ function [silenceSignal] = SilenceDetector(inputSignal)
     %holds filtered data  where each value is set to the average of its interval.
     for n = 1 : range %n is the current interval
         sum = 0; 
-        %sum of the values of the current interval
+        %sum of the ABSOLUTE values of the current interval
         for i = 1 : interval %i is the current value in the interval
             sum = sum + abs(filteredData((n-1)*interval+i));
             %adds current value to sum
