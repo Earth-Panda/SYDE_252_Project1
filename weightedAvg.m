@@ -11,9 +11,8 @@ function [data, filtered_data] = weightedAvg(audio, window, shouldPlot)
     
     filtered_data = filter(b_k, 1, data); % Returns filtered audio sample
     
-    if shouldPlot % Condition to plot, called in other files
+    if shouldPlot % Condition to plot
         sound(filtered_data, 16e3);
-%         audiowrite(processedFileName, filtered_data, 16e3);
         n = 1:length(data);
         subplot(2,1,1);
         plot(n, filtered_data);

@@ -1,4 +1,3 @@
-
 function [resampled_data, outputSignal] = MedianFilter(inputSignal, window, shouldPlot)
     %apply median filter
     processedFileName = strcat('new', inputSignal);
@@ -24,8 +23,8 @@ function [resampled_data, outputSignal] = MedianFilter(inputSignal, window, shou
         outputSignal(n) = medianVal;
         %assign output signal to median value of range
     end
-    if shouldPlot
-        %plot
+    if shouldPlot % Condition to plot
+        % plot
         sound(outputSignal, 16e3);
         length = 1:size(outputSignal);
         plot(length, outputSignal);

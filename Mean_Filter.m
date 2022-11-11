@@ -1,11 +1,15 @@
 function [input, output] = Mean_Filter(name, window, shouldPlot)
+    % Setup transfer function coefficients 
     a = 1;
     b = (1/window) * ones(window,1);
-
+    
+    %setup the audio file
     input = audioSetup(name, strcat("new", name), false);
+    %Filter
     output = filter(b,a,input);
     
-    if shouldPlot
+    if shouldPlot % Condition to plot
+        % plot
         sound(output, 16e3);
         figure
         n = 1:length(input);

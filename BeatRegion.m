@@ -14,7 +14,7 @@ function [beatRegion, sampleFound] = BeatRegion(audio, tol)
                 end
             end
             
-            disp("Beat region" + beatRegion);
+            disp("Beat region: " + beatRegion);
             %check for a spike at the beat differential within the
             %tolerance range (check to see if there is another beat
             %equadistant)

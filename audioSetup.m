@@ -3,11 +3,11 @@ function [new_data, sample_rate] = audioSetup(file, processedFileName, shouldPlo
     
     data = concatChannels(data);
 
-    %sound(data, sample_rate); % Play sound via .wav filename
-
-    audiowrite(processedFileName, data, sample_rate); % Writing mono sound
+    %audiowrite(processedFileName, data, sample_rate); % Writing mono sound
+    
     %to a new file name
     if shouldPlot % Condition to plot, called in other files
+        sound(data, sample_rate); % Play sound via .wav filename
         n = 1:length(data);
         plot(n, data);
         grid
