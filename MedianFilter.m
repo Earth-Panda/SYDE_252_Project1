@@ -26,6 +26,7 @@ function [resampled_data, outputSignal] = MedianFilter(inputSignal, window, shou
     end
     if shouldPlot
         %plot
+        sound(outputSignal, 16e3);
         length = 1:size(outputSignal);
         plot(length, outputSignal);
         grid;

@@ -5,20 +5,15 @@ clear;
 close all;
 
 section = "Syllables"
-%% Read audio files
-if section == "None"    
-    plotAudioDiff("Median","Birds.wav", 3, 2, [1,2], 1:1:30);
-    plotAudioDiff("Median","Drum.wav", 3, 2, [3,4], 1:1:30);
-    plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
-end
 %% Audio difference 
 
 % Birds
 %plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:50);
 % plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
 % plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+
 % Drum
-%diff = plotAudioDiff("Mean","Drum.wav", 3, 2, [3,4], 1:1:250);
+% diff = plotAudioDiff("Mean","Drum.wav", 3, 2, [3,4], 1:1:250);
 % plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
 % plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
 
@@ -27,8 +22,17 @@ end
 % plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
 % plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
 
-%d_diff = gradient(diff);
-%plotAudio(d_diff, "Gradient");
+% d_diff = gradient(diff);
+% plotAudio(d_diff, "Gradient");
+%% Print Filtered Audio
+[data, filterbird] = Mean_Filter("Birds.wav", 13, true);
+[data, filterspeech] = Mean_Filter("Speech.wav", 50, true);
+[data, filterdrum] = MedianFilter("Drum.wav", 2, true);
+
+audiowrite("LPF_Birds.wav", filterbird, 16e3);
+audiowrite("LPF_Speech.wav", filterspeech, 16e3);
+audiowrite("LPF_Drum.wav", filterdrum, 16e3);
+
 %% BPM of the Drums
 if section == "BPM"
     BPM();
@@ -39,10 +43,10 @@ if section == "Syllables"
 %     plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
 %     plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
 
-    [data filtered_data] = weightedAvg("Speech.wav", 13, true);
+    [data, filtered_data] = weightedAvg("Speech.wav", 13, true);
 
     % A huge ta-pes-try hung in her hallway 10 syllables
-    noise_threshold = 5.6865e-4 % Noise threshold
+    noise_threshold = 5.6865e-6 % Noise threshold
     syllable_threshold = sum(abs(filtered_data(34124:35464))) % value of chosen syllable threshold from speech sample
     active_region = []; % Declaring empty active region array
     syllable_counter = 0; % Initializing syllable counter
@@ -64,15 +68,11 @@ if section == "Syllables"
             end
         end
     end
-    syllable_counter % Missing semicolon to output value of syllalble counter
+    syllable_counter % output value of syllalble counter
+    staticNosie(filtered_data, noise_threshold);
 end
-staticNosie(filtered_data, noise_threshold);
 %% Silence
 if section == "Silence"
-%    plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:30);
-%    plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
-%    plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
-
    SilenceDetector("Birds.wav");
 end
 
