@@ -20,8 +20,8 @@ function [] = BPM()
 
     %Calculate BPM
     if(sampleFound)
-        beats = 2; 
-        seconds = beatRegion * 2 * s_index;
+        beats = 1; 
+        seconds = beatRegion * s_index;
         min = seconds/60;
         
         BPM = beats/min;

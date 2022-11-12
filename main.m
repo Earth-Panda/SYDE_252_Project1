@@ -3,7 +3,7 @@ clc;
 clear;
 close all;
 
-section = "Silence"
+section = "BPM"
 %% Audio difference 
 
 % Birds
