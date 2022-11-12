@@ -1,5 +1,5 @@
 function [] = Syllables()
-    [data, filtered_data] = weightedAvg("Speech.wav", 13, true);
+    [data, filtered_data] = WeightedAvg("Speech.wav", 13, true);
 
     % A huge ta-pes-try hung in her hallway 10 syllables
     noise_threshold = 5.6865e-6 % Noise threshold
@@ -25,6 +25,6 @@ function [] = Syllables()
         end
     end
     syllable_counter % output value of syllalble counter
-    staticNosie(filtered_data, noise_threshold);
+    StaticNosie(filtered_data, noise_threshold);
 end
 

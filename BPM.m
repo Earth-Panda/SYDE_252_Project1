@@ -5,9 +5,9 @@ function [] = BPM()
     %seconds per index
     s_index = time/length(output);
 
-    PlotAudio(output, "Drum.wav");
+    PlotAudio(output, "Filtered Drum.wav with w=13");
     %use a threshhold for what is considered a "beat"
-    pluseThreshold = 0.1;
+    pluseThreshold = 0.06;
 
     tol = 1500;
     %filter all signals below that "pulse"

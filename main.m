@@ -3,7 +3,7 @@ clc;
 clear;
 close all;
 
-section = "BPM"
+section = "Silence"
 %% Audio difference 
 
 % Birds
@@ -13,7 +13,7 @@ PlotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
 PlotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
 
 % Drum
-figure
+figure;
 diff = PlotAudioDiff("Mean","Drum.wav", 3, 2, [1,2], 1:1:250);
 PlotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
 PlotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
