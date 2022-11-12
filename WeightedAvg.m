@@ -7,7 +7,7 @@ function [data, filtered_data] = weightedAvg(audio, window, shouldPlot)
     
     processedFileName = strcat('new',audio); % Setting name of new file name, used in audioSetup.m audiowrite call
     
-    data = audioSetup(audio, processedFileName, false); % Returns setup audio sample
+    data = AudioSetup(audio, processedFileName, false); % Returns setup audio sample
     
     filtered_data = filter(b_k, 1, data); % Returns filtered audio sample
     

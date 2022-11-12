@@ -1,4 +1,4 @@
-function [] = plotAudio(Fs, Title)
+function [] = PlotAudio(Fs, Title)
     % PLots the audio
     figure;
     n = 1:length(Fs);

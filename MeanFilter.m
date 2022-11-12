@@ -1,10 +1,10 @@
-function [input, output] = Mean_Filter(name, window, shouldPlot)
+function [input, output] = MeanFilter(name, window, shouldPlot)
     % Setup transfer function coefficients 
     a = 1;
     b = (1/window) * ones(window,1);
     
     %setup the audio file
-    input = audioSetup(name, strcat("new", name), false);
+    input = AudioSetup(name, strcat("new", name), false);
     %Filter
     output = filter(b,a,input);
     

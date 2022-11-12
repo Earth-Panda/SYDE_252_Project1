@@ -8,28 +8,28 @@ section = "BPM"
 
 % Birds
 figure;
-plotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:50);
-plotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
-plotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
+PlotAudioDiff("Mean","Birds.wav", 3, 2, [1,2], 1:1:50);
+PlotAudioDiff("WAvg","Birds.wav", 3, 2, [3,4], 1:1:30);
+PlotAudioDiff("Median","Birds.wav", 3, 2, [5,6], 1:1:30);
 
 % Drum
 figure
-diff = plotAudioDiff("Mean","Drum.wav", 3, 2, [1,2], 1:1:250);
-plotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
-plotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
+diff = PlotAudioDiff("Mean","Drum.wav", 3, 2, [1,2], 1:1:250);
+PlotAudioDiff("WAvg","Drum.wav", 3, 2, [3,4], 1:1:30);
+PlotAudioDiff("Median","Drum.wav", 3, 2, [5,6], 1:1:30);
 
 % Speech
 figure;
-plotAudioDiff("Mean","Speech.wav", 3, 2, [1,2], 1:1:150);
-plotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
-plotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
+PlotAudioDiff("Mean","Speech.wav", 3, 2, [1,2], 1:1:150);
+PlotAudioDiff("WAvg","Speech.wav", 3, 2, [3,4], 1:1:30);
+PlotAudioDiff("Median","Speech.wav", 3, 2, [5,6], 1:1:30);
 
 d_diff = gradient(diff);
-plotAudio(d_diff, "Gradient");
+PlotAudio(d_diff, "Gradient");
 
 %% Print Filtered Audio
-[data, filterbird] = Mean_Filter("Birds.wav", 13, true);
-[data, filterspeech] = Mean_Filter("Speech.wav", 50, true);
+[data, filterbird] = MeanFilter("Birds.wav", 13, true);
+[data, filterspeech] = MeanFilter("Speech.wav", 50, true);
 [data, filterdrum] = MedianFilter("Drum.wav", 2, true);
 
 audiowrite("LPF_Birds.wav", filterbird, 16e3);

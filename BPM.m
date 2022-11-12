@@ -1,18 +1,18 @@
 function [] = BPM()
 %BPM is aproximatly 82 BPM
-    [original, output] = Mean_Filter("Drum.wav", 13, false);
+    [original, output] = MeanFilter("Drum.wav", 13, false);
     time = audioinfo("Drum.wav").Duration;
     %seconds per index
     s_index = time/length(output);
 
-    plotAudio(output, "Drum.wav");
+    PlotAudio(output, "Drum.wav");
     %use a threshhold for what is considered a "beat"
     pluseThreshold = 0.1;
 
     tol = 1500;
     %filter all signals below that "pulse"
-    output = hpf(output, pluseThreshold, tol);
-    plotAudio(output, "Pulses");
+    output = PeakFindHPF(output, pluseThreshold, tol);
+    PlotAudio(output, "Pulses");
     
     %determine the region of between beats
     [beatRegion, sampleFound] = BeatRegion(output, tol);

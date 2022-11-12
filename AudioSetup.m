@@ -1,7 +1,7 @@
-function [new_data, sample_rate] = audioSetup(file, processedFileName, shouldPlot)
+function [new_data, sample_rate] = AudioSetup(file, processedFileName, shouldPlot)
     [data, sample_rate] = audioread(file);
     
-    data = concatChannels(data);
+    data = ConcatChannels(data);
 
     %audiowrite(processedFileName, data, sample_rate); % Writing mono sound
     
